@@ -32,8 +32,7 @@ class UI:
         master.geometry("800x600")
         master.grid_columnconfigure(3)
         master.grid_rowconfigure(100)
-        master.grid(sticky=E+W+N+S)          # stretch enabled
-
+ 
         self.master = master
         
         self.WindowInit()                    # Windows frame setup
