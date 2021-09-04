@@ -18,7 +18,7 @@ SCREEN_Y = 350
 # Version
 VERSION_STRING = "V0.1.0-Experimental"            # No name, no slogan
 
-# add gprobe [Option] button
+# add [Option] button
 CommandOptionsList = [
         "<Command 1>",
         "<Command 2>",
@@ -29,12 +29,12 @@ class UI:
     def __init__(self, master):
         # Start the main layout
         master.title("UI")
-        master.geometry("800x600")
+        master.geometry("800x520")
         master.grid_columnconfigure(3)
         master.grid_rowconfigure(100)
  
         self.master = master
-        
+
         self.WindowInit()                    # Windows frame setup
         self.WindowMenuInit()                # Menus and submenus
 
@@ -82,14 +82,14 @@ class UI:
         MenuFile.add_command(label="Save All", command=self.ActionMenuFileSaveAll)        
 
         MenuFile.add_separator()
-        
+
         # FILE submenu -> Connection Settings
         MenuConnection = Menu(menu)
         MenuFile.add_command(label="Connection Settings", \
                              command=self.ActionMenuConnectionSettings)
 
         MenuFile.add_separator()
-        
+
         # FILE Submenu Exit
         MenuExit = Menu(menu)
         MenuFile.add_command(label="Exit", command=self.ActionMenuExit)
@@ -105,14 +105,14 @@ class UI:
         menu.add_cascade(label="View", menu=MenuView)
 
         # Tools
-        MenuTools = Menu(menu)
+#        MenuTools = Menu(menu)
 #        MenuFile.add_command(label="Tools",command=self.ActionMenuTools)
-        menu.add_cascade(label="Tools", menu=MenuTools)
+#        menu.add_cascade(label="Tools", menu=MenuTools)
 
         # Macro
-        MenuMacro = Menu(menu)
+#        MenuMacro = Menu(menu)
 #        MenuFile.add_command(label="Macro", command=self.ActionMenuMacro)
-        menu.add_cascade(label="Macros", menu=MenuMacro)
+#        menu.add_cascade(label="Macros", menu=MenuMacro)
 
         # Window
         MenuWindow = Menu(menu)
@@ -138,11 +138,11 @@ class UI:
         self.CmdLine.bind('<Down>'  ,self.ActionCmdHistoryScroll)  # <down>  will scroll down history        
         self.CmdLine.CmdHistory = []                               # History of Command lines
         self.CmdLine.CmdLastIndex = None
-        
+
         # add gprobe [GO] button to execute
         self.GoButton = Button(self.master, text="[GO]", command=self.ActionGo)
         self.GoButton.grid(column=1, row=0)
-        
+
         self.OptionButton = Menubutton(self.master,text="Options")
         self.OptionButton.grid(column=3, row=0)
         self.OptionButton.menu = Menu(self.OptionButton)
@@ -153,8 +153,12 @@ class UI:
                                                    command  = self.CommandOptionCallBack,
                                                    variable = self.WhichOption)
 
+        self.TestButton = Button(self.master, text="Test 1",
+                                 command=self.master.quit)
+        self.TestButton.grid(column=1, row=2)
+
         # add [CLOSE] button
-        self.CloseButton = Button(self.master, text="Close", \
+        self.CloseButton = Button(self.master, text="Close",
                                   command=self.master.quit)
         self.CloseButton.grid(column=1, row=5)
 
@@ -221,7 +225,7 @@ class UI:
         
     def ActionHelpAbout(self):
         self.AddWindowText("[MENU] About\n")
-        messagebox.showinfo("Gprobe", "Gprobe V1.0.0")
+        messagebox.showinfo("UI", "Experimental V1.0.0")
 
     def ActionMenuHelp(self):
         self.AddWindowText("[MENU] Help\n")
@@ -275,14 +279,15 @@ class UI:
                 else:
                     self.CmdLine.CmdLastIndex = 0
             # add scrolled item to Entry box command line                    
-            self.CmdLine.insert(0, self.CmdLine.CmdHistory[self.CmdLine.CmdLastIndex])
+            self.CmdLine.insert(0, 
+                    self.CmdLine.CmdHistory[self.CmdLine.CmdLastIndex])
         
     def ActionGoEntry(self,event):
         self.EntryGetCommandLine()
 
     def ActionGo(self):
         self.EntryGetCommandLine()
-        
+
 # create main "screen"
 if __name__ == '__main__' :
     try:    
